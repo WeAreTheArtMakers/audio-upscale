@@ -49,6 +49,14 @@
         color: var(--muted);
         line-height: 1.65;
       }
+      pre {
+        margin: 0;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(8, 12, 20, 0.8);
+        overflow-x: auto;
+      }
       a {
         color: var(--cyan);
       }
@@ -107,10 +115,10 @@
         <h2 class="en">2) License Issue</h2>
         <h2 class="tr">2) Lisans Üretimi</h2>
         <p class="en">
-          Generate a signed license token (JWT or signed blob) after payment. Include plan, expiry, and seat/device policy in claims.
+          Generate signed license tokens outside the desktop app with your private license issuer service. Include plan, expiry, and device id in claims.
         </p>
         <p class="tr">
-          Ödeme sonrası imzalı lisans tokenı (JWT veya imzalı blob) üretin. Plan, süre ve cihaz/koltuk politikalarını token claim’lerine ekleyin.
+          Lisans token’larını masaüstü uygulama dışında özel lisans servisinizle üretin. Claim alanlarında plan, süre ve cihaz kimliğini tutun.
         </p>
       </section>
 
@@ -118,12 +126,10 @@
         <h2 class="en">3) App Activation</h2>
         <h2 class="tr">3) Uygulama Aktivasyonu</h2>
         <p class="en">
-          In desktop app settings, add an activation panel that accepts the token and verifies signature locally. Optional online check can validate revocation,
-          but audio must never be uploaded.
+          In Settings > License Plans & Activation, paste token and activate. Signature/device/expiry checks are local. Audio files are never uploaded.
         </p>
         <p class="tr">
-          Masaüstü ayarlara lisans token alan aktivasyon paneli ekleyin ve imzayı yerelde doğrulayın. İsteğe bağlı online kontrol yalnızca iptal bilgisini doğrulayabilir;
-          ses dosyası asla yüklenmemelidir.
+          Settings > License Plans & Activation alanına token yapıştırıp etkinleştirin. İmza/cihaz/süre kontrolleri yerelde yapılır. Ses dosyası asla yüklenmez.
         </p>
       </section>
 
@@ -139,20 +145,34 @@
       </section>
 
       <section class="card">
-        <h2 class="en">5) Required legal pack before sales</h2>
-        <h2 class="tr">5) Satış öncesi zorunlu yasal paket</h2>
-        <ul class="en">
-          <li><a href="../EULA.md">EULA</a></li>
-          <li><a href="../PRIVACY.md">Privacy (Local-first)</a></li>
-          <li><a href="../THIRD_PARTY_NOTICES.md">Third-party notices</a></li>
-          <li><a href="../MODEL_LICENSE_NOTICES.md">Model license notices</a></li>
-        </ul>
-        <ul class="tr">
-          <li><a href="../EULA.md">EULA</a></li>
-          <li><a href="../PRIVACY.md">Gizlilik (Yerel-öncelikli)</a></li>
-          <li><a href="../THIRD_PARTY_NOTICES.md">Üçüncü taraf bildirimleri</a></li>
-          <li><a href="../MODEL_LICENSE_NOTICES.md">Model lisans bildirimleri</a></li>
-        </ul>
+        <h2 class="en">Issuer Service Example Flow</h2>
+        <h2 class="tr">Issuer Servisi Örnek Akış</h2>
+        <p class="en">
+          Use your private backend/admin tool to track customers/licenses and generate device-bound tokens:
+        </p>
+        <p class="tr">
+          Müşteri/lisans takibi ve cihaza bağlı token üretimi için özel backend/admin aracınızı kullanın:
+        </p>
+        <pre><code>1) Create customer record (id/email/plan)
+2) Read app Device ID from customer
+3) Issue signed token with claims:
+   - device_id
+   - plan
+   - issued_at
+   - expires_at
+4) Deliver token securely to customer
+5) Customer activates token inside app settings</code></pre>
+      </section>
+
+      <section class="card">
+        <h2 class="en">5) Legal checklist before sales</h2>
+        <h2 class="tr">5) Satış öncesi yasal kontrol listesi</h2>
+        <p class="en">
+          Prepare and publish your own EULA, Privacy Policy (local-first), third-party notices, and model license matrix on your official website.
+        </p>
+        <p class="tr">
+          EULA, Gizlilik Politikası (local-first), üçüncü taraf bildirimleri ve model lisans matrisinizi resmi web sitenizde yayımlayın.
+        </p>
       </section>
 
       <section class="card">

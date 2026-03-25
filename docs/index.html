@@ -473,7 +473,7 @@
                 <span class="en">Join Waitlist</span>
                 <span class="tr">Bekleme Listesine Katıl</span>
               </a>
-              <a class="btn btn-secondary" href="./activation.html">
+              <a id="activation-cta" class="btn btn-secondary" href="#">
                 <span class="en">Activation Flow</span>
                 <span class="tr">Aktivasyon Akışı</span>
               </a>
@@ -712,21 +712,23 @@
             <span class="en">Join Waitlist</span>
             <span class="tr">Bekleme Listesi</span>
           </a>
-          <a class="btn btn-secondary" href="./LICENSING_DISTRIBUTION.md">
+          <a id="activation-cta-secondary" class="btn btn-secondary" href="#">
             <span class="en">Licensing Guide</span>
             <span class="tr">Lisans Rehberi</span>
+          </a>
+          <a id="release-cta" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
+            <span class="en">Latest Release</span>
+            <span class="tr">Son Sürüm</span>
           </a>
         </div>
       </section>
 
       <p class="footer">
-        <span class="en">Need launch details? Read </span>
+        <span class="en">Need launch details? See </span>
         <span class="tr">Çıkış detayları için </span>
-        <a class="inline-link" href="./SALES_READINESS.md">Sales Readiness</a>
+        <a id="activation-link-footer" class="inline-link" href="./activation.html">Activation Flow</a>
         <span> • </span>
-        <a class="inline-link" href="./LICENSING_DISTRIBUTION.md">Licensing + Distribution</a>
-        <span> • </span>
-        <a class="inline-link" href="./activation.html">Activation Flow</a>
+        <a id="release-link-footer" class="inline-link" href="#" target="_blank" rel="noreferrer">Latest Release</a>
       </p>
     </main>
 
@@ -737,6 +739,12 @@
         const trBtn = document.getElementById("lang-tr");
         const buyAnchors = [document.getElementById("buy-cta"), document.getElementById("buy-cta-secondary")];
         const waitlistAnchors = [document.getElementById("waitlist-cta"), document.getElementById("waitlist-cta-secondary")];
+        const activationAnchors = [
+          document.getElementById("activation-cta"),
+          document.getElementById("activation-cta-secondary"),
+          document.getElementById("activation-link-footer")
+        ];
+        const releaseAnchors = [document.getElementById("release-cta"), document.getElementById("release-link-footer")];
 
         const setLang = (lang) => {
           body.setAttribute("data-lang", lang);
@@ -749,14 +757,17 @@
         trBtn.addEventListener("click", () => setLang("tr"));
 
         const defaultConfig = {
-          buyUrl: "https://buy.wammmaster.com",
-          waitlistUrl: "https://github.com/WeAreTheArtMakers/audio-upscale/discussions/new",
-          activationUrl: "./activation.html"
+          buyUrl: "https://checkout.wammmaster.com/pro-monthly",
+          waitlistUrl: "https://forms.gle/wamm-master-waitlist",
+          activationUrl: "./activation.html",
+          latestReleaseUrl: "https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest"
         };
 
         const applyConfig = (config) => {
           const buyUrl = config.buyUrl || defaultConfig.buyUrl;
           const waitlistUrl = config.waitlistUrl || defaultConfig.waitlistUrl;
+          const activationUrl = config.activationUrl || defaultConfig.activationUrl;
+          const latestReleaseUrl = config.latestReleaseUrl || defaultConfig.latestReleaseUrl;
           buyAnchors.forEach((anchor) => {
             if (anchor) {
               anchor.href = buyUrl;
@@ -765,6 +776,16 @@
           waitlistAnchors.forEach((anchor) => {
             if (anchor) {
               anchor.href = waitlistUrl;
+            }
+          });
+          activationAnchors.forEach((anchor) => {
+            if (anchor) {
+              anchor.href = activationUrl;
+            }
+          });
+          releaseAnchors.forEach((anchor) => {
+            if (anchor) {
+              anchor.href = latestReleaseUrl;
             }
           });
         };

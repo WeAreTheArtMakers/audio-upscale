@@ -1,5 +1,13 @@
 {
-  "buyUrl": "https://buy.wammmaster.com",
-  "waitlistUrl": "https://github.com/WeAreTheArtMakers/audio-upscale/issues/new?template=waitlist.yml&title=Waitlist:+wamm+Master",
-  "activationUrl": "./activation.html"
+  "buyUrl": "https://checkout.wammmaster.com/pro-monthly",
+  "waitlistUrl": "https://forms.gle/wamm-master-waitlist",
+  "activationUrl": "./activation.html",
+  "latestReleaseUrl": "https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest",
+  "pricing": {
+    "creatorMonthlyUsd": 19,
+    "creatorYearlyUsd": 179,
+    "proMonthlyUsd": 39,
+    "proYearlyUsd": 349,
+    "studioMonthlyUsd": 99
+  }
 }

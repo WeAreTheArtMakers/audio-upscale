@@ -1,48 +1,65 @@
 # wamm Master
 
-wamm Master is a local-first desktop app for AI-assisted audio enhancement.
+wamm Master is a local-first desktop app for AI-assisted audio enhancement, super-resolution, artifact reduction, and perceptual reconstruction.
 
-It is designed for creators who need better perceived quality from low-quality music and voice recordings, especially Suno-style MP3 outputs.
+This repository is intentionally **marketing-only**:
+- GitHub home README
+- GitHub Pages landing/activation docs
+- public release binaries (under Releases)
 
-## Download (macOS Apple Silicon)
+Source code is private and is **not** published in this repository.
 
-- Latest release: [Releases](https://github.com/WeAreTheArtMakers/audio-upscale/releases)
-- Recommended asset: `wamm-master-darwin-arm64-0.1.0.zip`
-- Direct download: [macOS arm64 zip](https://github.com/WeAreTheArtMakers/audio-upscale/releases/download/v0.1.0-macos-preview/wamm-master-darwin-arm64-0.1.0.zip)
+## Product Positioning
 
-## Product Highlights
+wamm Master is not a one-click mastering toy.
 
-- Two dedicated modes: `Music` and `Voiceover`
-- AI-assisted super-resolution + artifact reduction
-- Confidence-aware processing with Safe/Creative behavior
-- Local processing by default (no forced cloud upload)
+It uses two separate domain-aware paths:
+- Music mode
+- Voiceover mode
 
-## Important Truthfulness Policy
+## Truthfulness Policy
 
 wamm Master does **not** claim perfect restoration of lost studio data.
 
-Use claims like:
-
+Use this language:
 - AI-assisted enhancement
 - super-resolution
 - artifact reduction
 - perceptual reconstruction
 
-## Website / Product Page
+## Local-First Promise
 
-- Live page: [https://wearetheartmakers.github.io/audio-upscale/](https://wearetheartmakers.github.io/audio-upscale/)
-- Page source: `docs/index.html`
+- Audio stays on the user’s machine
+- No cloud inference required for core processing
+- Privacy-first desktop workflow
 
-## Sales Setup
+## Download
 
-- Configure Buy/Waitlist links via `docs/site-config.json`
-- Activation flow page: `docs/activation.html`
+- Latest release: [https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest](https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest)
 
-## macOS First Plan
+## GitHub Pages
 
-Current public release priority is macOS Apple Silicon (`arm64`).
-Windows/Linux channels will follow after stabilization.
+- Landing page: `docs/index.html`
+- Activation flow: `docs/activation.html`
+- CTA config: `docs/site-config.json`
 
-## Contact
+## Sales Flow
 
-Use GitHub Issues/Discussions for now, or connect your official support address in the product page CTA config.
+1. User opens landing page
+2. Clicks Buy License / Join Waitlist / Activation Flow
+3. Downloads latest release from GitHub Releases
+4. Activates in-app with signed device-bound license token
+
+## Release Policy
+
+- Public repo: marketing + docs + release assets only
+- No model weights in git
+- No app source code in public branch
+
+## License Plans (example)
+
+- Monthly
+- Yearly
+- Lifetime
+
+Pricing links and release URLs are configured in `docs/site-config.json`.
