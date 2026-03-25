@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wamm Master | Local AI Audio Enhancement</title>
+    <meta
+      name="description"
+      content="wamm Master is a local-first desktop app for AI-assisted audio enhancement, super-resolution, artifact reduction, and reconstruction."
+    />
+    <style>
+      :root {
+        --bg: #070b14;
+        --panel: #0d1320;
+        --text: #e8f0fc;
+        --muted: #9fb2c8;
+        --cyan: #22d3ee;
+        --emerald: #34d399;
+        --border: #1d2a3d;
+        --warning: #f59e0b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Sora", "Manrope", "Space Grotesk", system-ui, -apple-system, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 16% 5%, rgba(34, 211, 238, 0.16), transparent 36%),
+          radial-gradient(circle at 82% 8%, rgba(52, 211, 153, 0.13), transparent 34%),
+          linear-gradient(165deg, #050811 0%, #070b14 45%, #090f1b 100%);
+      }
+
+      body[data-lang="en"] .tr {
+        display: none !important;
+      }
+
+      body[data-lang="tr"] .en {
+        display: none !important;
+      }
+
+      .container {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: rgba(7, 11, 20, 0.72);
+        border-bottom: 1px solid rgba(29, 42, 61, 0.8);
+      }
+
+      .topbar-inner {
+        width: min(1120px, 92vw);
+        margin: 0 auto;
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand {
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #d6e7fb;
+      }
+
+      .lang-switch {
+        display: flex;
+        gap: 8px;
+      }
+
+      .lang-btn {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        min-width: 52px;
+        min-height: 34px;
+        color: var(--muted);
+        background: rgba(11, 18, 30, 0.86);
+        cursor: pointer;
+      }
+
+      .lang-btn.active {
+        color: #e6f7ff;
+        border-color: rgba(34, 211, 238, 0.62);
+        background: rgba(34, 211, 238, 0.16);
+      }
+
+      .hero {
+        position: relative;
+        padding: 70px 0 58px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: rgba(8, 13, 24, 0.7);
+      }
+
+      h1 {
+        margin: 14px 0 0;
+        line-height: 1.06;
+        font-size: clamp(38px, 6vw, 68px);
+      }
+
+      .sub {
+        margin: 18px 0 0;
+        max-width: 62ch;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: clamp(15px, 2vw, 18px);
+      }
+
+      .cta-row {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 600;
+        transition: transform 0.18s ease, border-color 0.18s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(100deg, rgba(34, 211, 238, 0.24), rgba(52, 211, 153, 0.2));
+        border-color: rgba(34, 211, 238, 0.5);
+      }
+
+      .btn-secondary {
+        background: rgba(15, 23, 37, 0.76);
+        color: var(--muted);
+      }
+
+      .truth {
+        margin-top: 16px;
+        color: #bcd0e7;
+        font-size: 13px;
+      }
+
+      .dna-panel {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.18), transparent 42%),
+          radial-gradient(circle at 78% 12%, rgba(52, 211, 153, 0.17), transparent 40%),
+          rgba(8, 13, 24, 0.92);
+        min-height: 360px;
+        padding: 18px;
+      }
+
+      .dna-title {
+        font-size: 13px;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .dna-track {
+        position: absolute;
+        inset: 56px 18px 24px;
+      }
+
+      .strand {
+        position: absolute;
+        width: 2px;
+        background: linear-gradient(180deg, rgba(34, 211, 238, 0.45), rgba(52, 211, 153, 0.14));
+        border-radius: 999px;
+      }
+
+      .cell {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(168, 243, 255, 0.88);
+        box-shadow: 0 0 18px rgba(34, 211, 238, 0.42);
+        animation: floatCell 3.1s ease-in-out infinite;
+      }
+
+      .wave {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 62px;
+        display: grid;
+        grid-template-columns: repeat(36, 1fr);
+        gap: 3px;
+      }
+
+      .bar {
+        align-self: end;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(52, 211, 153, 0.92), rgba(34, 211, 238, 0.35));
+        animation: pulseBar 1.7s ease-in-out infinite;
+      }
+
+      @keyframes floatCell {
+        0%,
+        100% {
+          transform: translateY(0) scale(0.88);
+          opacity: 0.42;
+        }
+        50% {
+          transform: translateY(-16px) scale(1.12);
+          opacity: 0.98;
+        }
+      }
+
+      @keyframes pulseBar {
+        0%,
+        100% {
+          height: 10px;
+          opacity: 0.35;
+        }
+        50% {
+          height: 42px;
+          opacity: 0.92;
+        }
+      }
+
+      .section {
+        margin-top: 24px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(10, 16, 28, 0.86);
+        padding: 20px;
+      }
+
+      .section h2 {
+        margin: 0 0 8px;
+        font-size: 21px;
+      }
+
+      .section p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .feature {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        background: rgba(12, 18, 32, 0.72);
+      }
+
+      .feature strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .feature span {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .plan {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(12, 18, 32, 0.72);
+        padding: 14px;
+      }
+
+      .plan.recommended {
+        border-color: rgba(34, 211, 238, 0.55);
+        box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.25) inset;
+      }
+
+      .plan h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .price {
+        margin-top: 8px;
+        font-size: 26px;
+        font-weight: 700;
+      }
+
+      .price span {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .plan ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .table-wrap {
+        margin-top: 12px;
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        border-bottom: 1px solid rgba(29, 42, 61, 0.8);
+        padding: 10px;
+      }
+
+      th {
+        color: #bcd0e7;
+        background: rgba(9, 14, 25, 0.86);
+      }
+
+      td {
+        color: var(--muted);
+      }
+
+      .yes {
+        color: #b8ffdf;
+      }
+
+      .mid {
+        color: #ffe1a3;
+      }
+
+      .no {
+        color: #fca5a5;
+      }
+
+      .cta-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .cta-note {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #9dc5de;
+      }
+
+      .warn {
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        background: rgba(245, 158, 11, 0.1);
+        color: #ffe6b6;
+        font-size: 12px;
+      }
+
+      .footer {
+        margin: 28px 0 42px;
+        color: #8ea3bc;
+        font-size: 13px;
+      }
+
+      a.inline-link {
+        color: var(--cyan);
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
+        .pricing-grid {
+          grid-template-columns: 1fr;
+        }
+        .cta-card {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body data-lang="en">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">wamm Master</div>
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button id="lang-en" class="lang-btn active" type="button">EN</button>
+          <button id="lang-tr" class="lang-btn" type="button">TR</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="pill en">Local First Desktop Audio</span>
+            <span class="pill tr">Yerel Öncelikli Masaüstü Ses</span>
+
+            <h1>wamm Master</h1>
+
+            <p class="sub en">
+              A premium local desktop app for AI-assisted enhancement, super-resolution, artifact reduction, and domain-specific reconstruction.
+              Built for creators who need better results from low-quality music demos and voiceover recordings without sending files to the cloud.
+            </p>
+            <p class="sub tr">
+              AI destekli iyileştirme, süper-çözünürlük, artefakt azaltma ve alana özel yeniden yapılandırma için premium, tamamen yerel masaüstü uygulaması.
+              Düşük kaliteli müzik/voiceover kayıtlarını buluta yüklemeden iyileştirmek isteyen üreticiler için tasarlandı.
+            </p>
+
+            <div class="cta-row">
+              <a id="buy-cta" class="btn btn-primary" href="#" target="_blank" rel="noreferrer">
+                <span class="en">Buy License</span>
+                <span class="tr">Lisans Satın Al</span>
+              </a>
+              <a id="waitlist-cta" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
+                <span class="en">Join Waitlist</span>
+                <span class="tr">Bekleme Listesine Katıl</span>
+              </a>
+              <a class="btn btn-secondary" href="./activation.html">
+                <span class="en">Activation Flow</span>
+                <span class="tr">Aktivasyon Akışı</span>
+              </a>
+            </div>
+
+            <p class="truth en">
+              Truth-first promise: wamm Master does not claim perfect restoration of lost studio data. It presents confidence, warnings, and Safe vs Creative outputs.
+            </p>
+            <p class="truth tr">
+              Doğruluk sözü: wamm Master, kayıp stüdyo verisini kusursuz geri getirdiğini iddia etmez. Güven skoru, uyarılar ve Safe/Creative çıktıları sunar.
+            </p>
+          </div>
+
+          <div class="dna-panel">
+            <div class="dna-title en">DNA Reconstruction Preview</div>
+            <div class="dna-title tr">DNA Yeniden Yapılandırma Önizlemesi</div>
+            <div class="dna-track">
+              <div class="strand" style="left: 22%; top: 0; bottom: 0;"></div>
+              <div class="strand" style="left: 51%; top: 0; bottom: 0;"></div>
+              <div class="strand" style="left: 77%; top: 0; bottom: 0;"></div>
+
+              <div class="cell" style="left: 20%; top: 15%; animation-delay: 0s;"></div>
+              <div class="cell" style="left: 48%; top: 36%; animation-delay: 0.35s;"></div>
+              <div class="cell" style="left: 75%; top: 24%; animation-delay: 0.7s;"></div>
+              <div class="cell" style="left: 24%; top: 56%; animation-delay: 1.05s;"></div>
+              <div class="cell" style="left: 53%; top: 68%; animation-delay: 1.4s;"></div>
+            </div>
+            <div class="wave">
+              <div class="bar" style="animation-delay: 0s;"></div>
+              <div class="bar" style="animation-delay: 0.05s;"></div>
+              <div class="bar" style="animation-delay: 0.1s;"></div>
+              <div class="bar" style="animation-delay: 0.15s;"></div>
+              <div class="bar" style="animation-delay: 0.2s;"></div>
+              <div class="bar" style="animation-delay: 0.25s;"></div>
+              <div class="bar" style="animation-delay: 0.3s;"></div>
+              <div class="bar" style="animation-delay: 0.35s;"></div>
+              <div class="bar" style="animation-delay: 0.4s;"></div>
+              <div class="bar" style="animation-delay: 0.45s;"></div>
+              <div class="bar" style="animation-delay: 0.5s;"></div>
+              <div class="bar" style="animation-delay: 0.55s;"></div>
+              <div class="bar" style="animation-delay: 0.6s;"></div>
+              <div class="bar" style="animation-delay: 0.65s;"></div>
+              <div class="bar" style="animation-delay: 0.7s;"></div>
+              <div class="bar" style="animation-delay: 0.75s;"></div>
+              <div class="bar" style="animation-delay: 0.8s;"></div>
+              <div class="bar" style="animation-delay: 0.85s;"></div>
+              <div class="bar" style="animation-delay: 0.9s;"></div>
+              <div class="bar" style="animation-delay: 0.95s;"></div>
+              <div class="bar" style="animation-delay: 1s;"></div>
+              <div class="bar" style="animation-delay: 1.05s;"></div>
+              <div class="bar" style="animation-delay: 1.1s;"></div>
+              <div class="bar" style="animation-delay: 1.15s;"></div>
+              <div class="bar" style="animation-delay: 1.2s;"></div>
+              <div class="bar" style="animation-delay: 1.25s;"></div>
+              <div class="bar" style="animation-delay: 1.3s;"></div>
+              <div class="bar" style="animation-delay: 1.35s;"></div>
+              <div class="bar" style="animation-delay: 1.4s;"></div>
+              <div class="bar" style="animation-delay: 1.45s;"></div>
+              <div class="bar" style="animation-delay: 1.5s;"></div>
+              <div class="bar" style="animation-delay: 1.55s;"></div>
+              <div class="bar" style="animation-delay: 1.6s;"></div>
+              <div class="bar" style="animation-delay: 1.65s;"></div>
+              <div class="bar" style="animation-delay: 1.7s;"></div>
+              <div class="bar" style="animation-delay: 1.75s;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="en">What makes this product different</h2>
+        <h2 class="tr">Bu ürünü farklı yapan nedir?</h2>
+        <div class="features">
+          <div class="feature">
+            <strong class="en">Two real modes</strong>
+            <strong class="tr">Gerçek iki mod</strong>
+            <span class="en">Music and Voiceover are separate first-class chains, not one-model-fits-all processing.</span>
+            <span class="tr">Music ve Voiceover ayrı birinci sınıf zincirlerdir; tek-model herkese-uyar yaklaşımı yoktur.</span>
+          </div>
+          <div class="feature">
+            <strong class="en">Cutoff-aware SR</strong>
+            <strong class="tr">Cutoff farkındalıklı SR</strong>
+            <span class="en">MP3 spectral hole detection with adaptive preconditioning for more stable super-resolution.</span>
+            <span class="tr">Daha stabil süper-çözünürlük için MP3 spektral boşluk tespiti ve adaptif ön-koşullandırma.</span>
+          </div>
+          <div class="feature">
+            <strong class="en">Confidence-driven output</strong>
+            <strong class="tr">Güven skorlu çıktı</strong>
+            <span class="en">Safe vs Creative variants with warnings and confidence drop zones by band/stem.</span>
+            <span class="tr">Band/stem bazlı güven düşüş bölgeleri ve uyarılarla Safe/Creative çıktı seçenekleri.</span>
+          </div>
+          <div class="feature">
+            <strong class="en">Local privacy by default</strong>
+            <strong class="tr">Varsayılan yerel gizlilik</strong>
+            <span class="en">No cloud inference required. Audio stays on-device during analysis, enhancement, and export.</span>
+            <span class="tr">Bulut zorunlu değildir. Ses dosyası analiz, iyileştirme ve export boyunca cihazda kalır.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pricing">
+        <h2 class="en">Pricing</h2>
+        <h2 class="tr">Fiyatlandırma</h2>
+        <p class="en">Suggested launch pricing for direct desktop sales. Customize values in your checkout provider.</p>
+        <p class="tr">Doğrudan masaüstü satış için önerilen başlangıç fiyatları. Checkout sağlayıcınıza göre düzenleyin.</p>
+
+        <div class="pricing-grid">
+          <article class="plan">
+            <h3>Creator</h3>
+            <div class="price">$19 <span>/ month</span></div>
+            <div class="price">$149 <span>/ lifetime</span></div>
+            <ul>
+              <li class="en">Music + Voice basic presets</li>
+              <li class="tr">Music + Voice temel presetler</li>
+              <li class="en">Safe export pipeline</li>
+              <li class="tr">Safe export pipeline</li>
+              <li class="en">Local-only processing</li>
+              <li class="tr">Tamamen yerel işlem</li>
+            </ul>
+          </article>
+
+          <article class="plan recommended">
+            <h3>Pro</h3>
+            <div class="price">$39 <span>/ month</span></div>
+            <div class="price">$249 <span>/ lifetime</span></div>
+            <ul>
+              <li class="en">All Creator features</li>
+              <li class="tr">Creator paketinin tüm özellikleri</li>
+              <li class="en">Model Manager + Preflight + Benchmarks</li>
+              <li class="tr">Model Manager + Preflight + Benchmark</li>
+              <li class="en">Advanced compare + delta story</li>
+              <li class="tr">Gelişmiş karşılaştırma + delta hikaye modu</li>
+            </ul>
+          </article>
+
+          <article class="plan">
+            <h3>Studio</h3>
+            <div class="price">$99 <span>/ month seat</span></div>
+            <div class="price">Custom <span>/ annual</span></div>
+            <ul>
+              <li class="en">Team seats + shared presets</li>
+              <li class="tr">Ekip koltukları + paylaşımlı presetler</li>
+              <li class="en">Batch queue workflows</li>
+              <li class="tr">Batch queue iş akışları</li>
+              <li class="en">Priority support + onboarding</li>
+              <li class="tr">Öncelikli destek + onboarding</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="en">Plan Comparison</h2>
+        <h2 class="tr">Paket Karşılaştırması</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="en">Feature</th>
+                <th class="tr">Özellik</th>
+                <th>Creator</th>
+                <th>Pro</th>
+                <th>Studio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="en">Music + Voice pipelines</td>
+                <td class="tr">Music + Voice pipeline’ları</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+              </tr>
+              <tr>
+                <td class="en">Safe/Creative dual export</td>
+                <td class="tr">Safe/Creative çift export</td>
+                <td class="mid">Limited</td>
+                <td class="yes">Full</td>
+                <td class="yes">Full</td>
+              </tr>
+              <tr>
+                <td class="en">Model preflight + auto-fix</td>
+                <td class="tr">Model preflight + auto-fix</td>
+                <td class="no">No</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+              </tr>
+              <tr>
+                <td class="en">Profile benchmark + auto-tune</td>
+                <td class="tr">Profile benchmark + auto-tune</td>
+                <td class="no">No</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+              </tr>
+              <tr>
+                <td class="en">Batch queue</td>
+                <td class="tr">Batch queue</td>
+                <td class="no">No</td>
+                <td class="mid">Add-on</td>
+                <td class="yes">Yes</td>
+              </tr>
+              <tr>
+                <td class="en">Team management</td>
+                <td class="tr">Ekip yönetimi</td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="yes">Yes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section cta-card">
+        <div>
+          <h2 class="en">Buy + Waitlist + Activation</h2>
+          <h2 class="tr">Satın Alma + Bekleme Listesi + Aktivasyon</h2>
+          <p class="en">Connect checkout URLs and launch a real activation flow with signed local license tokens.</p>
+          <p class="tr">Checkout bağlantılarını bağlayın ve imzalı yerel lisans token’ı ile gerçek aktivasyon akışını başlatın.</p>
+          <p class="cta-note en">Current CTA links are loaded from <code>docs/site-config.json</code>.</p>
+          <p class="cta-note tr">Mevcut CTA bağlantıları <code>docs/site-config.json</code> dosyasından okunur.</p>
+          <div class="warn en">
+            Never claim "perfect restoration". Keep claims as AI-assisted enhancement / super-resolution / artifact reduction.
+          </div>
+          <div class="warn tr">
+            Asla "kusursuz geri getirme" iddiası kullanmayın. Metinleri AI destekli iyileştirme / süper-çözünürlük / artefakt azaltma olarak tutun.
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a id="buy-cta-secondary" class="btn btn-primary" href="#" target="_blank" rel="noreferrer">
+            <span class="en">Buy Now</span>
+            <span class="tr">Hemen Satın Al</span>
+          </a>
+          <a id="waitlist-cta-secondary" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
+            <span class="en">Join Waitlist</span>
+            <span class="tr">Bekleme Listesi</span>
+          </a>
+          <a class="btn btn-secondary" href="./LICENSING_DISTRIBUTION.md">
+            <span class="en">Licensing Guide</span>
+            <span class="tr">Lisans Rehberi</span>
+          </a>
+        </div>
+      </section>
+
+      <p class="footer">
+        <span class="en">Need launch details? Read </span>
+        <span class="tr">Çıkış detayları için </span>
+        <a class="inline-link" href="./SALES_READINESS.md">Sales Readiness</a>
+        <span> • </span>
+        <a class="inline-link" href="./LICENSING_DISTRIBUTION.md">Licensing + Distribution</a>
+        <span> • </span>
+        <a class="inline-link" href="./activation.html">Activation Flow</a>
+      </p>
+    </main>
+
+    <script>
+      (function initPage() {
+        const body = document.body;
+        const enBtn = document.getElementById("lang-en");
+        const trBtn = document.getElementById("lang-tr");
+        const buyAnchors = [document.getElementById("buy-cta"), document.getElementById("buy-cta-secondary")];
+        const waitlistAnchors = [document.getElementById("waitlist-cta"), document.getElementById("waitlist-cta-secondary")];
+
+        const setLang = (lang) => {
+          body.setAttribute("data-lang", lang);
+          enBtn.classList.toggle("active", lang === "en");
+          trBtn.classList.toggle("active", lang === "tr");
+          document.documentElement.lang = lang === "tr" ? "tr" : "en";
+        };
+
+        enBtn.addEventListener("click", () => setLang("en"));
+        trBtn.addEventListener("click", () => setLang("tr"));
+
+        const defaultConfig = {
+          buyUrl: "https://buy.wammmaster.com",
+          waitlistUrl: "https://github.com/WeAreTheArtMakers/audio-upscale/discussions/new",
+          activationUrl: "./activation.html"
+        };
+
+        const applyConfig = (config) => {
+          const buyUrl = config.buyUrl || defaultConfig.buyUrl;
+          const waitlistUrl = config.waitlistUrl || defaultConfig.waitlistUrl;
+          buyAnchors.forEach((anchor) => {
+            if (anchor) {
+              anchor.href = buyUrl;
+            }
+          });
+          waitlistAnchors.forEach((anchor) => {
+            if (anchor) {
+              anchor.href = waitlistUrl;
+            }
+          });
+        };
+
+        fetch("./site-config.json", { cache: "no-store" })
+          .then((response) => (response.ok ? response.json() : defaultConfig))
+          .then((config) => applyConfig(config))
+          .catch(() => applyConfig(defaultConfig));
+      })();
+    </script>
+  </body>
+</html>

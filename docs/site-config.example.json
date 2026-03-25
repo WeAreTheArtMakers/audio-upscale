@@ -1,0 +1,5 @@
+{
+  "buyUrl": "https://checkout.example.com/wamm-master",
+  "waitlistUrl": "https://github.com/OWNER/REPO/issues/new?template=waitlist.yml&title=Waitlist:+wamm+Master",
+  "activationUrl": "https://licenses.example.com/activate"
+}

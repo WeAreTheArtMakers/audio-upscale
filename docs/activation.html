@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wamm Master | Activation Flow</title>
+    <style>
+      :root {
+        --bg: #070b14;
+        --panel: #0f1725;
+        --text: #e9f3ff;
+        --muted: #9fb2c8;
+        --border: #1d2a3d;
+        --cyan: #22d3ee;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--text);
+        font-family: "Sora", "Manrope", system-ui, -apple-system, sans-serif;
+        background:
+          radial-gradient(circle at 15% 5%, rgba(34, 211, 238, 0.14), transparent 38%),
+          linear-gradient(160deg, #050811 0%, #070b14 50%, #090f1b 100%);
+      }
+      .container {
+        width: min(920px, 92vw);
+        margin: 0 auto;
+        padding: 36px 0 48px;
+      }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: rgba(10, 16, 28, 0.86);
+        padding: 18px;
+        margin-top: 14px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 5vw, 44px);
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+      p,
+      li {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      a {
+        color: var(--cyan);
+      }
+      code {
+        color: #d8f6ff;
+      }
+      .lang {
+        display: inline-flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .lang button {
+        min-height: 34px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(12, 20, 34, 0.86);
+        color: var(--muted);
+        min-width: 52px;
+        cursor: pointer;
+      }
+      .lang button.active {
+        border-color: rgba(34, 211, 238, 0.6);
+        background: rgba(34, 211, 238, 0.16);
+        color: #dbf6ff;
+      }
+      body[data-lang="en"] .tr {
+        display: none;
+      }
+      body[data-lang="tr"] .en {
+        display: none;
+      }
+    </style>
+  </head>
+  <body data-lang="en">
+    <main class="container">
+      <h1>wamm Master Activation</h1>
+      <div class="lang">
+        <button id="en-btn" class="active" type="button">EN</button>
+        <button id="tr-btn" type="button">TR</button>
+      </div>
+
+      <section class="card">
+        <h2 class="en">1) Checkout</h2>
+        <h2 class="tr">1) Satın Alma</h2>
+        <p class="en">
+          Connect your payment provider checkout URL in <code>docs/site-config.json</code> under <code>buyUrl</code>. Use Stripe Checkout,
+          Lemon Squeezy, Paddle, or your provider of choice.
+        </p>
+        <p class="tr">
+          Ödeme sağlayıcınızın checkout adresini <code>docs/site-config.json</code> içindeki <code>buyUrl</code> alanına bağlayın.
+          Stripe Checkout, Lemon Squeezy, Paddle veya tercih ettiğiniz sağlayıcı kullanılabilir.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="en">2) License Issue</h2>
+        <h2 class="tr">2) Lisans Üretimi</h2>
+        <p class="en">
+          Generate a signed license token (JWT or signed blob) after payment. Include plan, expiry, and seat/device policy in claims.
+        </p>
+        <p class="tr">
+          Ödeme sonrası imzalı lisans tokenı (JWT veya imzalı blob) üretin. Plan, süre ve cihaz/koltuk politikalarını token claim’lerine ekleyin.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="en">3) App Activation</h2>
+        <h2 class="tr">3) Uygulama Aktivasyonu</h2>
+        <p class="en">
+          In desktop app settings, add an activation panel that accepts the token and verifies signature locally. Optional online check can validate revocation,
+          but audio must never be uploaded.
+        </p>
+        <p class="tr">
+          Masaüstü ayarlara lisans token alan aktivasyon paneli ekleyin ve imzayı yerelde doğrulayın. İsteğe bağlı online kontrol yalnızca iptal bilgisini doğrulayabilir;
+          ses dosyası asla yüklenmemelidir.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="en">4) Waitlist CTA</h2>
+        <h2 class="tr">4) Bekleme Listesi CTA</h2>
+        <p class="en">
+          Configure <code>waitlistUrl</code> in <code>docs/site-config.json</code>. Current suggested flow uses GitHub Discussions or an external form.
+        </p>
+        <p class="tr">
+          <code>docs/site-config.json</code> içinde <code>waitlistUrl</code> alanını ayarlayın. Önerilen akış GitHub Discussions veya harici form bağlantısıdır.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 class="en">5) Required legal pack before sales</h2>
+        <h2 class="tr">5) Satış öncesi zorunlu yasal paket</h2>
+        <ul class="en">
+          <li><a href="../EULA.md">EULA</a></li>
+          <li><a href="../PRIVACY.md">Privacy (Local-first)</a></li>
+          <li><a href="../THIRD_PARTY_NOTICES.md">Third-party notices</a></li>
+          <li><a href="../MODEL_LICENSE_NOTICES.md">Model license notices</a></li>
+        </ul>
+        <ul class="tr">
+          <li><a href="../EULA.md">EULA</a></li>
+          <li><a href="../PRIVACY.md">Gizlilik (Yerel-öncelikli)</a></li>
+          <li><a href="../THIRD_PARTY_NOTICES.md">Üçüncü taraf bildirimleri</a></li>
+          <li><a href="../MODEL_LICENSE_NOTICES.md">Model lisans bildirimleri</a></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <p class="en">
+          Back to <a href="./index.html">Landing Page</a>
+        </p>
+        <p class="tr">
+          <a href="./index.html">Landing Page</a> sayfasına dön
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const body = document.body;
+      const enBtn = document.getElementById("en-btn");
+      const trBtn = document.getElementById("tr-btn");
+      const setLang = (lang) => {
+        body.setAttribute("data-lang", lang);
+        enBtn.classList.toggle("active", lang === "en");
+        trBtn.classList.toggle("active", lang === "tr");
+        document.documentElement.lang = lang === "tr" ? "tr" : "en";
+      };
+      enBtn.addEventListener("click", () => setLang("en"));
+      trBtn.addEventListener("click", () => setLang("tr"));
+    </script>
+  </body>
+</html>
