@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wamm Master | Local AI Audio Enhancement</title>
+    <title>wamm Master | AI Audio Reconstruction Desktop App</title>
     <meta
       name="description"
-      content="wamm Master is a local-first desktop app for AI-assisted audio enhancement, super-resolution, artifact reduction, and reconstruction."
+      content="wamm Master improves low-quality music and voice recordings with local AI reconstruction, super-resolution, artifact reduction, and adaptive processing pipelines."
     />
     <style>
       :root {
@@ -17,7 +17,6 @@
         --cyan: #22d3ee;
         --emerald: #34d399;
         --border: #1d2a3d;
-        --warning: #f59e0b;
       }
 
       * {
@@ -168,12 +167,6 @@
         color: var(--muted);
       }
 
-      .truth {
-        margin-top: 16px;
-        color: #bcd0e7;
-        font-size: 13px;
-      }
-
       .dna-panel {
         position: relative;
         overflow: hidden;
@@ -302,88 +295,61 @@
         line-height: 1.6;
       }
 
-      .pricing-grid {
+      .stack-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
         margin-top: 12px;
       }
 
-      .plan {
+      .stack-card {
         border: 1px solid var(--border);
         border-radius: 12px;
         background: rgba(12, 18, 32, 0.72);
         padding: 14px;
       }
 
-      .plan.recommended {
-        border-color: rgba(34, 211, 238, 0.55);
-        box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.25) inset;
+      .stack-card h3 {
+        margin: 0 0 8px;
       }
 
-      .plan h3 {
+      .stack-card ul {
         margin: 0;
-        font-size: 18px;
-      }
-
-      .price {
-        margin-top: 8px;
-        font-size: 26px;
-        font-weight: 700;
-      }
-
-      .price span {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 500;
-      }
-
-      .plan ul {
-        margin: 12px 0 0;
         padding-left: 18px;
         color: var(--muted);
         line-height: 1.65;
       }
 
-      .table-wrap {
+      .steps {
         margin-top: 12px;
-        overflow-x: auto;
+        display: grid;
+        gap: 10px;
+      }
+
+      .step {
         border: 1px solid var(--border);
         border-radius: 12px;
+        padding: 10px 12px;
+        background: rgba(12, 18, 32, 0.72);
       }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
+      .step strong {
+        color: #d8ebff;
       }
 
-      th,
-      td {
-        text-align: left;
-        border-bottom: 1px solid rgba(29, 42, 61, 0.8);
+      .step p {
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+      .proof {
+        margin-top: 10px;
+        border: 1px solid rgba(34, 211, 238, 0.35);
+        border-radius: 10px;
+        background: rgba(34, 211, 238, 0.08);
         padding: 10px;
-      }
-
-      th {
-        color: #bcd0e7;
-        background: rgba(9, 14, 25, 0.86);
-      }
-
-      td {
-        color: var(--muted);
-      }
-
-      .yes {
-        color: #b8ffdf;
-      }
-
-      .mid {
-        color: #ffe1a3;
-      }
-
-      .no {
-        color: #fca5a5;
+        color: #c8e9ff;
+        font-size: 13px;
       }
 
       .cta-card {
@@ -391,22 +357,6 @@
         grid-template-columns: 1fr auto;
         gap: 16px;
         align-items: center;
-      }
-
-      .cta-note {
-        margin-top: 8px;
-        font-size: 12px;
-        color: #9dc5de;
-      }
-
-      .warn {
-        margin-top: 12px;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid rgba(245, 158, 11, 0.4);
-        background: rgba(245, 158, 11, 0.1);
-        color: #ffe6b6;
-        font-size: 12px;
       }
 
       .footer {
@@ -420,15 +370,9 @@
       }
 
       @media (max-width: 980px) {
-        .hero-grid {
-          grid-template-columns: 1fr;
-        }
-        .features {
-          grid-template-columns: 1fr;
-        }
-        .pricing-grid {
-          grid-template-columns: 1fr;
-        }
+        .hero-grid,
+        .features,
+        .stack-grid,
         .cta-card {
           grid-template-columns: 1fr;
         }
@@ -450,18 +394,18 @@
       <section class="hero">
         <div class="hero-grid">
           <div>
-            <span class="pill en">Local First Desktop Audio</span>
-            <span class="pill tr">Yerel Öncelikli Masaüstü Ses</span>
+            <span class="pill en">AI Audio Reconstruction Desktop</span>
+            <span class="pill tr">AI Ses Yeniden Yapılandırma</span>
 
             <h1>wamm Master</h1>
 
             <p class="sub en">
-              A premium local desktop app for AI-assisted enhancement, super-resolution, artifact reduction, and domain-specific reconstruction.
-              Built for creators who need better results from low-quality music demos and voiceover recordings without sending files to the cloud.
+              Turn low-quality music and voice recordings into polished, release-ready sound with adaptive AI enhancement.
+              Designed for creators working with compressed MP3 outputs, AI-generated tracks, and imperfect voiceover captures.
             </p>
             <p class="sub tr">
-              AI destekli iyileştirme, süper-çözünürlük, artefakt azaltma ve alana özel yeniden yapılandırma için premium, tamamen yerel masaüstü uygulaması.
-              Düşük kaliteli müzik/voiceover kayıtlarını buluta yüklemeden iyileştirmek isteyen üreticiler için tasarlandı.
+              Düşük kaliteli müzik ve voice kayıtlarını adaptif AI enhancement ile yayın kalitesine yaklaştırın.
+              Sıkıştırılmış MP3 çıktılar, AI üretilmiş parçalar ve sorunlu voiceover kayıtları için tasarlandı.
             </p>
 
             <div class="cta-row">
@@ -473,23 +417,16 @@
                 <span class="en">Join Waitlist</span>
                 <span class="tr">Bekleme Listesine Katıl</span>
               </a>
-              <a id="activation-cta" class="btn btn-secondary" href="#">
-                <span class="en">Activation Flow</span>
-                <span class="tr">Aktivasyon Akışı</span>
+              <a id="release-cta" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
+                <span class="en">Latest Release</span>
+                <span class="tr">Son Sürüm</span>
               </a>
             </div>
-
-            <p class="truth en">
-              Truth-first promise: wamm Master does not claim perfect restoration of lost studio data. It presents confidence, warnings, and Safe vs Creative outputs.
-            </p>
-            <p class="truth tr">
-              Doğruluk sözü: wamm Master, kayıp stüdyo verisini kusursuz geri getirdiğini iddia etmez. Güven skoru, uyarılar ve Safe/Creative çıktıları sunar.
-            </p>
           </div>
 
           <div class="dna-panel">
-            <div class="dna-title en">DNA Reconstruction Preview</div>
-            <div class="dna-title tr">DNA Yeniden Yapılandırma Önizlemesi</div>
+            <div class="dna-title en">DNA Reconstruction Engine</div>
+            <div class="dna-title tr">DNA Yeniden Yapılandırma Motoru</div>
             <div class="dna-track">
               <div class="strand" style="left: 22%; top: 0; bottom: 0;"></div>
               <div class="strand" style="left: 51%; top: 0; bottom: 0;"></div>
@@ -544,163 +481,109 @@
       </section>
 
       <section class="section">
-        <h2 class="en">What makes this product different</h2>
-        <h2 class="tr">Bu ürünü farklı yapan nedir?</h2>
+        <h2 class="en">Why this app is needed now</h2>
+        <h2 class="tr">Bu uygulama neden bugün gerekli?</h2>
         <div class="features">
           <div class="feature">
-            <strong class="en">Two real modes</strong>
-            <strong class="tr">Gerçek iki mod</strong>
-            <span class="en">Music and Voiceover are separate first-class chains, not one-model-fits-all processing.</span>
-            <span class="tr">Music ve Voiceover ayrı birinci sınıf zincirlerdir; tek-model herkese-uyar yaklaşımı yoktur.</span>
+            <strong class="en">AI music output quality gap</strong>
+            <strong class="tr">AI müzik kalite boşluğu</strong>
+            <span class="en">Many generated tracks sound narrow-band, brittle, or smeared after compression.</span>
+            <span class="tr">Birçok AI parça, sıkıştırma sonrası dar bantlı, kırılgan veya bulanık duyuluyor.</span>
           </div>
           <div class="feature">
-            <strong class="en">Cutoff-aware SR</strong>
-            <strong class="tr">Cutoff farkındalıklı SR</strong>
-            <span class="en">MP3 spectral hole detection with adaptive preconditioning for more stable super-resolution.</span>
-            <span class="tr">Daha stabil süper-çözünürlük için MP3 spektral boşluk tespiti ve adaptif ön-koşullandırma.</span>
+            <strong class="en">Voice intelligibility issues</strong>
+            <strong class="tr">Voice anlaşılabilirlik sorunları</strong>
+            <span class="en">Low-cost microphones and noisy rooms reduce clarity, presence, and listener comfort.</span>
+            <span class="tr">Düşük seviye mikrofonlar ve gürültülü ortamlar netlik ve dinleme konforunu düşürüyor.</span>
           </div>
           <div class="feature">
-            <strong class="en">Confidence-driven output</strong>
-            <strong class="tr">Güven skorlu çıktı</strong>
-            <span class="en">Safe vs Creative variants with warnings and confidence drop zones by band/stem.</span>
-            <span class="tr">Band/stem bazlı güven düşüş bölgeleri ve uyarılarla Safe/Creative çıktı seçenekleri.</span>
+            <strong class="en">One model is not enough</strong>
+            <strong class="tr">Tek model yeterli değil</strong>
+            <span class="en">Music and speech need different restoration logic and different enhancement priorities.</span>
+            <span class="tr">Müzik ve konuşma, farklı onarım mantığı ve farklı öncelikler gerektirir.</span>
           </div>
           <div class="feature">
-            <strong class="en">Local privacy by default</strong>
-            <strong class="tr">Varsayılan yerel gizlilik</strong>
-            <span class="en">No cloud inference required. Audio stays on-device during analysis, enhancement, and export.</span>
-            <span class="tr">Bulut zorunlu değildir. Ses dosyası analiz, iyileştirme ve export boyunca cihazda kalır.</span>
+            <strong class="en">Research-to-product execution</strong>
+            <strong class="tr">Araştırmadan ürüne geçiş</strong>
+            <span class="en">wamm Master continuously integrates current restoration research into practical desktop workflows.</span>
+            <span class="tr">wamm Master, güncel restoration araştırmalarını masaüstü iş akışına sürekli entegre eder.</span>
           </div>
         </div>
       </section>
 
-      <section class="section" id="pricing">
-        <h2 class="en">Pricing</h2>
-        <h2 class="tr">Fiyatlandırma</h2>
-        <p class="en">Suggested launch pricing for direct desktop sales. Customize values in your checkout provider.</p>
-        <p class="tr">Doğrudan masaüstü satış için önerilen başlangıç fiyatları. Checkout sağlayıcınıza göre düzenleyin.</p>
-
-        <div class="pricing-grid">
-          <article class="plan">
-            <h3>Creator</h3>
-            <div class="price">$19 <span>/ month</span></div>
-            <div class="price">$149 <span>/ lifetime</span></div>
+      <section class="section">
+        <h2 class="en">Model stack and why it matters</h2>
+        <h2 class="tr">Model stack ve neden önemli</h2>
+        <div class="stack-grid">
+          <article class="stack-card">
+            <h3 class="en">Music Pipeline</h3>
+            <h3 class="tr">Music Pipeline</h3>
             <ul>
-              <li class="en">Music + Voice basic presets</li>
-              <li class="tr">Music + Voice temel presetler</li>
-              <li class="en">Safe export pipeline</li>
-              <li class="tr">Safe export pipeline</li>
-              <li class="en">Local-only processing</li>
-              <li class="tr">Tamamen yerel işlem</li>
+              <li class="en"><strong>UniverSR</strong>: primary wide-band reconstruction engine</li>
+              <li class="tr"><strong>UniverSR</strong>: ana geniş bant yeniden yapılandırma motoru</li>
+              <li class="en"><strong>AudioSR</strong>: stable fallback for compatibility</li>
+              <li class="tr"><strong>AudioSR</strong>: uyumluluk için stabil fallback</li>
+              <li class="en"><strong>BS-RoFormer</strong>: stem-selective rebuild (vocals/drums/bass/other)</li>
+              <li class="tr"><strong>BS-RoFormer</strong>: stem-seçici yeniden inşa (vokal/drum/bass/other)</li>
+              <li class="en"><strong>Demucs</strong>: compatibility separation fallback</li>
+              <li class="tr"><strong>Demucs</strong>: uyumluluk için separation fallback</li>
             </ul>
           </article>
 
-          <article class="plan recommended">
-            <h3>Pro</h3>
-            <div class="price">$39 <span>/ month</span></div>
-            <div class="price">$249 <span>/ lifetime</span></div>
+          <article class="stack-card">
+            <h3 class="en">Voiceover Pipeline</h3>
+            <h3 class="tr">Voiceover Pipeline</h3>
             <ul>
-              <li class="en">All Creator features</li>
-              <li class="tr">Creator paketinin tüm özellikleri</li>
-              <li class="en">Model Manager + Preflight + Benchmarks</li>
-              <li class="tr">Model Manager + Preflight + Benchmark</li>
-              <li class="en">Advanced compare + delta story</li>
-              <li class="tr">Gelişmiş karşılaştırma + delta hikaye modu</li>
-            </ul>
-          </article>
-
-          <article class="plan">
-            <h3>Studio</h3>
-            <div class="price">$99 <span>/ month seat</span></div>
-            <div class="price">Custom <span>/ annual</span></div>
-            <ul>
-              <li class="en">Team seats + shared presets</li>
-              <li class="tr">Ekip koltukları + paylaşımlı presetler</li>
-              <li class="en">Batch queue workflows</li>
-              <li class="tr">Batch queue iş akışları</li>
-              <li class="en">Priority support + onboarding</li>
-              <li class="tr">Öncelikli destek + onboarding</li>
+              <li class="en"><strong>ClearVoice</strong>: HQ speech restoration path</li>
+              <li class="tr"><strong>ClearVoice</strong>: HQ konuşma restorasyon yolu</li>
+              <li class="en"><strong>LavaSR</strong>: fast speech enhancement path</li>
+              <li class="tr"><strong>LavaSR</strong>: hızlı konuşma iyileştirme yolu</li>
+              <li class="en"><strong>Resemble Enhance</strong>: perceptual finishing stage</li>
+              <li class="tr"><strong>Resemble Enhance</strong>: algısal finishing katmanı</li>
+              <li class="en"><strong>DeepFilterNet</strong>: low-compute denoise</li>
+              <li class="tr"><strong>DeepFilterNet</strong>: düşük compute denoise</li>
             </ul>
           </article>
         </div>
       </section>
 
       <section class="section">
-        <h2 class="en">Plan Comparison</h2>
-        <h2 class="tr">Paket Karşılaştırması</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th class="en">Feature</th>
-                <th class="tr">Özellik</th>
-                <th>Creator</th>
-                <th>Pro</th>
-                <th>Studio</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="en">Music + Voice pipelines</td>
-                <td class="tr">Music + Voice pipeline’ları</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <td class="en">Safe/Creative dual export</td>
-                <td class="tr">Safe/Creative çift export</td>
-                <td class="mid">Limited</td>
-                <td class="yes">Full</td>
-                <td class="yes">Full</td>
-              </tr>
-              <tr>
-                <td class="en">Model preflight + auto-fix</td>
-                <td class="tr">Model preflight + auto-fix</td>
-                <td class="no">No</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <td class="en">Profile benchmark + auto-tune</td>
-                <td class="tr">Profile benchmark + auto-tune</td>
-                <td class="no">No</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <td class="en">Batch queue</td>
-                <td class="tr">Batch queue</td>
-                <td class="no">No</td>
-                <td class="mid">Add-on</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <td class="en">Team management</td>
-                <td class="tr">Ekip yönetimi</td>
-                <td class="no">No</td>
-                <td class="no">No</td>
-                <td class="yes">Yes</td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 class="en">How wamm Master improves low-quality MP3 audio</h2>
+        <h2 class="tr">wamm Master düşük kaliteli MP3 sesi nasıl geliştirir?</h2>
+        <div class="steps">
+          <div class="step">
+            <strong class="en">1) Pre-analysis</strong>
+            <strong class="tr">1) Ön analiz</strong>
+            <p class="en">Detects cutoff zones, spectral holes, transient density, speech/music ratio, and enhancement confidence.</p>
+            <p class="tr">Cutoff bölgeleri, spektral boşluklar, transient yoğunluğu, speech/music oranı ve enhancement confidence tespit edilir.</p>
+          </div>
+          <div class="step">
+            <strong class="en">2) Adaptive reconstruction route</strong>
+            <strong class="tr">2) Adaptif yeniden yapılandırma yolu</strong>
+            <p class="en">Selects whole-mix or stem-selective strategy and applies cutoff-aware preconditioning when needed.</p>
+            <p class="tr">Gerektiğinde whole-mix veya stem-seçici strateji seçilir ve cutoff-aware preconditioning uygulanır.</p>
+          </div>
+          <div class="step">
+            <strong class="en">3) Confidence-aware blending and finalize</strong>
+            <strong class="tr">3) Confidence-aware blending ve finalize</strong>
+            <p class="en">Balances original/enhanced bands to keep punch, stereo stability, and natural timbre while increasing detail.</p>
+            <p class="tr">Detayı artırırken punch, stereo stabilite ve doğal tınıyı korumak için orijinal/enhanced bantlar dengelenir.</p>
+          </div>
+        </div>
+        <div class="proof en">
+          Our team continuously runs research-driven updates to push low-quality MP3 restoration quality further with each release.
+        </div>
+        <div class="proof tr">
+          Ekibimiz, düşük kaliteli MP3 restorasyonunu her sürümde ileri taşımak için araştırma odaklı güncellemeleri sürekli uygular.
         </div>
       </section>
 
       <section class="section cta-card">
         <div>
-          <h2 class="en">Buy + Waitlist + Activation</h2>
-          <h2 class="tr">Satın Alma + Bekleme Listesi + Aktivasyon</h2>
-          <p class="en">Connect checkout URLs and launch a real activation flow with signed local license tokens.</p>
-          <p class="tr">Checkout bağlantılarını bağlayın ve imzalı yerel lisans token’ı ile gerçek aktivasyon akışını başlatın.</p>
-          <p class="cta-note en">Current CTA links are loaded from <code>docs/site-config.json</code>.</p>
-          <p class="cta-note tr">Mevcut CTA bağlantıları <code>docs/site-config.json</code> dosyasından okunur.</p>
-          <div class="warn en">
-            Never claim "perfect restoration". Keep claims as AI-assisted enhancement / super-resolution / artifact reduction.
-          </div>
-          <div class="warn tr">
-            Asla "kusursuz geri getirme" iddiası kullanmayın. Metinleri AI destekli iyileştirme / süper-çözünürlük / artefakt azaltma olarak tutun.
-          </div>
+          <h2 class="en">Start with the latest release</h2>
+          <h2 class="tr">Son sürümle hemen başlayın</h2>
+          <p class="en">Download wamm Master, load a low-quality track, run Analyze + Enhance, and compare the result instantly.</p>
+          <p class="tr">wamm Master’ı indirin, düşük kaliteli parçayı yükleyin, Analyze + Enhance çalıştırın ve sonucu anında karşılaştırın.</p>
         </div>
 
         <div class="cta-row">
@@ -712,11 +595,11 @@
             <span class="en">Join Waitlist</span>
             <span class="tr">Bekleme Listesi</span>
           </a>
-          <a id="activation-cta-secondary" class="btn btn-secondary" href="#">
-            <span class="en">Licensing Guide</span>
-            <span class="tr">Lisans Rehberi</span>
+          <a id="activation-cta" class="btn btn-secondary" href="#">
+            <span class="en">Activation Guide</span>
+            <span class="tr">Aktivasyon Rehberi</span>
           </a>
-          <a id="release-cta" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
+          <a id="release-cta-secondary" class="btn btn-secondary" href="#" target="_blank" rel="noreferrer">
             <span class="en">Latest Release</span>
             <span class="tr">Son Sürüm</span>
           </a>
@@ -724,9 +607,7 @@
       </section>
 
       <p class="footer">
-        <span class="en">Need launch details? See </span>
-        <span class="tr">Çıkış detayları için </span>
-        <a id="activation-link-footer" class="inline-link" href="./activation.html">Activation Flow</a>
+        <a id="activation-link-footer" class="inline-link" href="#">Activation Guide</a>
         <span> • </span>
         <a id="release-link-footer" class="inline-link" href="#" target="_blank" rel="noreferrer">Latest Release</a>
       </p>
@@ -739,12 +620,12 @@
         const trBtn = document.getElementById("lang-tr");
         const buyAnchors = [document.getElementById("buy-cta"), document.getElementById("buy-cta-secondary")];
         const waitlistAnchors = [document.getElementById("waitlist-cta"), document.getElementById("waitlist-cta-secondary")];
-        const activationAnchors = [
-          document.getElementById("activation-cta"),
-          document.getElementById("activation-cta-secondary"),
-          document.getElementById("activation-link-footer")
+        const activationAnchors = [document.getElementById("activation-cta"), document.getElementById("activation-link-footer")];
+        const releaseAnchors = [
+          document.getElementById("release-cta"),
+          document.getElementById("release-cta-secondary"),
+          document.getElementById("release-link-footer")
         ];
-        const releaseAnchors = [document.getElementById("release-cta"), document.getElementById("release-link-footer")];
 
         const setLang = (lang) => {
           body.setAttribute("data-lang", lang);

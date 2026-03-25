@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wamm Master | Activation Flow</title>
+    <title>wamm Master | Activation Guide</title>
     <style>
       :root {
         --bg: #070b14;
@@ -49,19 +49,8 @@
         color: var(--muted);
         line-height: 1.65;
       }
-      pre {
-        margin: 0;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid var(--border);
-        background: rgba(8, 12, 20, 0.8);
-        overflow-x: auto;
-      }
       a {
         color: var(--cyan);
-      }
-      code {
-        color: #d8f6ff;
       }
       .lang {
         display: inline-flex;
@@ -92,96 +81,76 @@
   </head>
   <body data-lang="en">
     <main class="container">
-      <h1>wamm Master Activation</h1>
+      <h1>wamm Master Activation Guide</h1>
       <div class="lang">
         <button id="en-btn" class="active" type="button">EN</button>
         <button id="tr-btn" type="button">TR</button>
       </div>
 
       <section class="card">
-        <h2 class="en">1) Checkout</h2>
-        <h2 class="tr">1) Satın Alma</h2>
+        <h2 class="en">1) Download and Install</h2>
+        <h2 class="tr">1) İndir ve Kur</h2>
         <p class="en">
-          Connect your payment provider checkout URL in <code>docs/site-config.json</code> under <code>buyUrl</code>. Use Stripe Checkout,
-          Lemon Squeezy, Paddle, or your provider of choice.
+          Download the latest desktop build from GitHub Releases and install it on your computer.
         </p>
         <p class="tr">
-          Ödeme sağlayıcınızın checkout adresini <code>docs/site-config.json</code> içindeki <code>buyUrl</code> alanına bağlayın.
-          Stripe Checkout, Lemon Squeezy, Paddle veya tercih ettiğiniz sağlayıcı kullanılabilir.
+          GitHub Releases üzerinden en güncel masaüstü sürümü indirip bilgisayarınıza kurun.
         </p>
       </section>
 
       <section class="card">
-        <h2 class="en">2) License Issue</h2>
-        <h2 class="tr">2) Lisans Üretimi</h2>
+        <h2 class="en">2) Purchase License</h2>
+        <h2 class="tr">2) Lisans Satın Al</h2>
         <p class="en">
-          Generate signed license tokens outside the desktop app with your private license issuer service. Include plan, expiry, and device id in claims.
+          Complete checkout from the official purchase page. Your activation token is delivered to your email.
         </p>
         <p class="tr">
-          Lisans token’larını masaüstü uygulama dışında özel lisans servisinizle üretin. Claim alanlarında plan, süre ve cihaz kimliğini tutun.
+          Resmi satın alma sayfasından ödeme adımını tamamlayın. Aktivasyon token’ınız e-posta ile gönderilir.
         </p>
       </section>
 
       <section class="card">
-        <h2 class="en">3) App Activation</h2>
-        <h2 class="tr">3) Uygulama Aktivasyonu</h2>
+        <h2 class="en">3) Activate in App</h2>
+        <h2 class="tr">3) Uygulama İçinde Aktifleştir</h2>
         <p class="en">
-          In Settings > License Plans & Activation, paste token and activate. Signature/device/expiry checks are local. Audio files are never uploaded.
+          Open <strong>Settings → License Plans & Activation</strong>, paste your token, and click <strong>Activate</strong>.
         </p>
         <p class="tr">
-          Settings > License Plans & Activation alanına token yapıştırıp etkinleştirin. İmza/cihaz/süre kontrolleri yerelde yapılır. Ses dosyası asla yüklenmez.
+          <strong>Settings → License Plans & Activation</strong> bölümünü açın, token’ı yapıştırın ve <strong>Activate</strong> tıklayın.
         </p>
       </section>
 
       <section class="card">
-        <h2 class="en">4) Waitlist CTA</h2>
-        <h2 class="tr">4) Bekleme Listesi CTA</h2>
+        <h2 class="en">4) Start Your First Enhancement</h2>
+        <h2 class="tr">4) İlk İyileştirmeni Başlat</h2>
+        <ul class="en">
+          <li>Drop your file (MP3/WAV/FLAC/M4A/AAC/OGG/OPUS)</li>
+          <li>Choose Music or Voiceover mode</li>
+          <li>Run Analyze → Enhance</li>
+          <li>Compare before/after and export final output</li>
+        </ul>
+        <ul class="tr">
+          <li>Dosyanızı bırakın (MP3/WAV/FLAC/M4A/AAC/OGG/OPUS)</li>
+          <li>Music veya Voiceover modunu seçin</li>
+          <li>Analyze → Enhance çalıştırın</li>
+          <li>Before/after karşılaştırıp final çıktıyı export edin</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="en">5) Updates and Support</h2>
+        <h2 class="tr">5) Güncellemeler ve Destek</h2>
         <p class="en">
-          Configure <code>waitlistUrl</code> in <code>docs/site-config.json</code>. Current suggested flow uses GitHub Discussions or an external form.
+          Use the in-app update check in Settings. For activation issues, contact support with your order email and device ID.
         </p>
         <p class="tr">
-          <code>docs/site-config.json</code> içinde <code>waitlistUrl</code> alanını ayarlayın. Önerilen akış GitHub Discussions veya harici form bağlantısıdır.
+          Ayarlar bölümündeki update kontrolünü kullanın. Aktivasyon sorunlarında sipariş e-postanız ve device ID ile destek ekibine ulaşın.
         </p>
       </section>
 
       <section class="card">
-        <h2 class="en">Issuer Service Example Flow</h2>
-        <h2 class="tr">Issuer Servisi Örnek Akış</h2>
-        <p class="en">
-          Use your private backend/admin tool to track customers/licenses and generate device-bound tokens:
-        </p>
-        <p class="tr">
-          Müşteri/lisans takibi ve cihaza bağlı token üretimi için özel backend/admin aracınızı kullanın:
-        </p>
-        <pre><code>1) Create customer record (id/email/plan)
-2) Read app Device ID from customer
-3) Issue signed token with claims:
-   - device_id
-   - plan
-   - issued_at
-   - expires_at
-4) Deliver token securely to customer
-5) Customer activates token inside app settings</code></pre>
-      </section>
-
-      <section class="card">
-        <h2 class="en">5) Legal checklist before sales</h2>
-        <h2 class="tr">5) Satış öncesi yasal kontrol listesi</h2>
-        <p class="en">
-          Prepare and publish your own EULA, Privacy Policy (local-first), third-party notices, and model license matrix on your official website.
-        </p>
-        <p class="tr">
-          EULA, Gizlilik Politikası (local-first), üçüncü taraf bildirimleri ve model lisans matrisinizi resmi web sitenizde yayımlayın.
-        </p>
-      </section>
-
-      <section class="card">
-        <p class="en">
-          Back to <a href="./index.html">Landing Page</a>
-        </p>
-        <p class="tr">
-          <a href="./index.html">Landing Page</a> sayfasına dön
-        </p>
+        <p class="en">Back to <a href="./index.html">Landing Page</a></p>
+        <p class="tr"><a href="./index.html">Landing Page</a> sayfasına dön</p>
       </section>
     </main>
 

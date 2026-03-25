@@ -1,65 +1,113 @@
 # wamm Master
 
-wamm Master is a local-first desktop app for AI-assisted audio enhancement, super-resolution, artifact reduction, and perceptual reconstruction.
+![wamm Master DNA Mark](screenshots/dna-logo.svg)
 
-This repository is intentionally **marketing-only**:
-- GitHub home README
-- GitHub Pages landing/activation docs
-- public release binaries (under Releases)
+`wamm Master`, düşük kaliteli ses kayıtlarını modern dinleme standartlarına taşıyan, masaüstünde yerel çalışan bir **AI audio reconstruction** uygulamasıdır.
 
-Source code is private and is **not** published in this repository.
+Özellikle şu kullanım senaryolarına odaklanır:
+- AI üretilmiş müzikler (özellikle MP3 kaynaklı band daralması yaşayan üretimler)
+- Kötü encode edilmiş demo kayıtları
+- Voiceover / podcast / anlatım sesleri
 
-## Product Positioning
+Hedefimiz:
+- yalnızca sesi “yüksek” yapmak değil,
+- frekans alanını yeniden inşa ederek algısal netlik, derinlik ve sahne hissini artırmak,
+- yaratıcı üretimlerde **studio-grade ve ötesi** bir dinleme deneyimine yaklaşmak.
 
-wamm Master is not a one-click mastering toy.
+## Neden wamm Master?
 
-It uses two separate domain-aware paths:
-- Music mode
-- Voiceover mode
+Çünkü müzik ve konuşma aynı problem değil.
 
-## Truthfulness Policy
+wamm Master iki ayrı motorla çalışır:
+- `Music Mode`: armonik yapı, transient davranışı, bass stabilitesi, stem duyarlılığı
+- `Voiceover Mode`: intelligibility, sibilance kontrolü, gürültü temizliği, doğal ton
 
-wamm Master does **not** claim perfect restoration of lost studio data.
+Bu ayrım, tek modelle her içeriği “aynı şekilde parlatan” araçlara göre çok daha tutarlı sonuç üretir.
 
-Use this language:
-- AI-assisted enhancement
-- super-resolution
-- artifact reduction
-- perceptual reconstruction
+## Teknik Çekirdek (Model Mimarisı)
 
-## Local-First Promise
+### Music zinciri
+- `UniverSR` (primary): geniş bant yeniden yapılandırma ve yüksek kalite SR
+- `AudioSR` (stable fallback): olgun ve geniş uyumlu fallback motor
+- `BS-RoFormer` (stem route): vokal/drum/bass/other ayrıştırma tabanlı seçici onarım
+- `Demucs` (compat fallback): uyumluluk için ikinci separation fallback
 
-- Audio stays on the user’s machine
-- No cloud inference required for core processing
-- Privacy-first desktop workflow
+### Voiceover zinciri
+- `ClearVoice` (HQ path): kaliteli konuşma restoration ve speech enhancement
+- `LavaSR` (fast path): hızlı local speech SR/restore
+- `Resemble Enhance` (finish): algısal son katman, presence & tone finisher
+- `DeepFilterNet` (denoise): düşük compute ile gerçek zaman odaklı gürültü temizliği
 
-## Download
+## Sesi Nasıl Geliştiriyor?
 
-- Latest release: [https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest](https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest)
+wamm Master, enhancement sürecini bir mastering preset’i gibi değil, **analysis-first reconstruction** şeklinde yürütür:
 
-## GitHub Pages
+1. Kaynağı analiz eder (cutoff, spectral hole, noise floor, harmonic/transient yoğunluğu).
+2. İçeriğe göre doğru pipeline’ı seçer (music/voice ve preset tabanlı).
+3. MP3 kaynaklarda cutoff-aware preconditioning uygular.
+4. Gerekirse stem-selective route açar.
+5. Confidence-aware blending ile riskli bantlarda kontrollü karışım yapar.
+6. Safe/Creative çıktıları karşılaştırmalı sunar.
 
-- Landing page: `docs/index.html`
-- Activation flow: `docs/activation.html`
-- CTA config: `docs/site-config.json`
+Sonuç:
+- daha açık üst frekanslar,
+- daha temiz mid bölgesi,
+- daha kontrollü transientler,
+- daha stabil stereo alan.
 
-## Sales Flow
+## Artistik Deneyim
 
-1. User opens landing page
-2. Clicks Buy License / Join Waitlist / Activation Flow
-3. Downloads latest release from GitHub Releases
-4. Activates in-app with signed device-bound license token
+Uygulama arayüzü “DNA reconstruction” temasına sahiptir:
+- analiz aşamasında hücre tarama hissi,
+- yeniden inşa aşamasında split/merge helix hareketi,
+- finalize aşamasında spektral stabilizasyon animasyonları.
 
-## Release Policy
+Bu görsel dil, kullanıcıya işlemin hangi aşamada olduğunu sezgisel olarak anlatır ve yalnızca teknik değil artistik bir üretim hissi sunar.
 
-- Public repo: marketing + docs + release assets only
-- No model weights in git
-- No app source code in public branch
+## Ekran Görselleri ve Kullanım Akışı
 
-## License Plans (example)
+### 1) Ana çalışma alanı
+![Main Workspace](screenshots/01-main-workspace.png)
 
-- Monthly
-- Yearly
-- Lifetime
+### 2) Analysis + Recommendation
+Dosyayı yükledikten sonra uygulama içerik analizi yapar, önerilen zinciri seçer ve confidence/warning kartlarını gösterir.
+![Analysis and Recommendation](screenshots/02-analysis-recommendation.png)
 
-Pricing links and release URLs are configured in `docs/site-config.json`.
+### 3) Processing + A/B Compare
+Enhancement tamamlandığında before/after ve delta görüntüsü üzerinden kulakla karşılaştırma yapılır.
+![Processing and Compare](screenshots/03-processing-compare.png)
+
+### 4) System + Runtime Guard
+Device, accelerator, thermal/memory guard ve FFmpeg durumları canlı takip edilir.
+![System Panel](screenshots/04-system-panel.png)
+
+## Nasıl Kullanılır?
+
+1. Son sürümü indirin: [Latest Release](https://github.com/WeAreTheArtMakers/audio-upscale/releases/latest)
+2. Ses dosyanızı sürükleyip bırakın (`MP3`, `WAV`, `FLAC`, `M4A`, `AAC`, `OGG`, `OPUS`)
+3. `Music` veya `Voiceover` modunu seçin
+4. `Analyze` ile analiz edin
+5. `Enhance` ile işlemi başlatın
+6. A/B karşılaştırma yapın
+7. Çıktıyı `WAV` (primary), opsiyonel `FLAC` / `MP3` olarak export edin
+
+## Platform Desteği
+
+- macOS (Apple Silicon öncelikli)
+- Windows
+- Linux
+
+## Sürekli Geliştirme Yaklaşımı
+
+wamm Master, düşük kaliteli kaynakların gelişimi için yaşayan bir ürün yol haritasına sahiptir:
+- model adaptörleri güncellenir,
+- cutoff/denoise/stem karar sistemi iyileştirilir,
+- yeni araştırmalar üretim pipeline’ına kontrollü şekilde entegre edilir.
+
+Her sürümde amaç, aynı dosyadan daha iyi algısal kaliteye ulaşmaktır.
+
+## Bağlantılar
+
+- Landing Page: `docs/index.html`
+- Activation Guide: `docs/activation.html`
+- Site config: `docs/site-config.json`
