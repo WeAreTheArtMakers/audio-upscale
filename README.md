@@ -8,6 +8,7 @@ It is designed for creators who need better perceived quality from low-quality m
 
 - Latest release: [Releases](https://github.com/WeAreTheArtMakers/audio-upscale/releases)
 - Recommended asset: `wamm-master-darwin-arm64-0.1.0.zip`
+- Direct download: [macOS arm64 zip](https://github.com/WeAreTheArtMakers/audio-upscale/releases/download/v0.1.0-macos-preview/wamm-master-darwin-arm64-0.1.0.zip)
 
 ## Product Highlights
 
